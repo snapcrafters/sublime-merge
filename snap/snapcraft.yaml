@@ -1,0 +1,67 @@
+name: sublime-merge
+adopt-info: sublime-merge
+summary: Meet a new Git Client, from the makers of Sublime Text
+base: core18
+description: |
+  Meet a new Git Client, from the makers of Sublime Text.
+
+architectures:
+  - build-on: amd64
+
+grade: stable
+confinement: classic
+
+apps:
+  sublime-merge:
+    command: opt/sublime_merge/sublime_merge
+    desktop: opt/sublime_merge/sublime_merge.desktop
+
+parts:
+  sublime-merge:
+    plugin: nil
+    override-build: |
+      set -eu
+      snapcraftctl build
+      # Get the latest release
+      #echo "Get latest release..."
+      ##https://download.sublimetext.com/sublime_merge_build_1119_x64.tar.xz
+      #wget --quiet https://download.sublimetext.com/latest/stable -O release.txt
+      #VERSION=$(cat release.txt)
+      VERSION=1119
+      snapcraftctl set-version $(echo $VERSION)
+      #echo $VERSION > $SNAPCRAFT_STAGE/version
+      rm -f release.txt 2>/dev/null
+      BUILD="x64"
+      TARBALL="sublime_merge_build_${VERSION}_${BUILD}.tar.xz"
+      TARBALL_URL="https://download.sublimetext.com/${TARBALL}"
+      echo "Downloading ${TARBALL_URL}..."
+      wget --quiet "${TARBALL_URL}" -O "${SNAPCRAFT_PART_INSTALL}/${TARBALL}"
+
+      echo "Unpacking ${TARBALL}..."
+      mkdir -p "${SNAPCRAFT_PART_INSTALL}/opt"
+      tar xf "${SNAPCRAFT_PART_INSTALL}/${TARBALL}" -C "${SNAPCRAFT_PART_INSTALL}/opt"
+      rm "${SNAPCRAFT_PART_INSTALL}/${TARBALL}"
+
+      # Correct the extraction path so it matches assets held within.
+      #mv "${SNAPCRAFT_PART_INSTALL}/opt/sublime_merge" "${SNAPCRAFT_PART_INSTALL}/opt/sublime_merge"
+
+      # Correct icon path
+      sed -i 's|Icon=sublime-merge|Icon=/opt/sublime_merge/Icon/256x256/sublime-merge.png|' $SNAPCRAFT_PART_INSTALL/opt/sublime_merge/sublime_merge.desktop
+      # Desktop Action are not Unity specific.
+      sed -i 's|OnlyShowIn|#OnlyShowIn|g' $SNAPCRAFT_PART_INSTALL/opt/sublime_merge/sublime_merge.desktop
+    build-packages:
+      - dpkg
+      - sed
+      - tar
+      - wget
+    stage-packages:
+      - libbsd0
+      - libffi6
+      - libgtk-3-0
+      - libpcre3
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
+    build-attributes:
+      - no-patchelf
