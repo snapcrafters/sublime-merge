@@ -1,5 +1,5 @@
 name: sublime-merge
-adopt-info: sublime-merge
+version: "1119"
 summary: Meet a new Git Client, from the makers of Sublime Text
 base: core18
 description: |
@@ -20,16 +20,9 @@ parts:
   sublime-merge:
     plugin: nil
     override-build: |
-      set -eu
       snapcraftctl build
-      # Get the latest release
-      #echo "Get latest release..."
-      ##https://download.sublimetext.com/sublime_merge_build_1119_x64.tar.xz
-      #wget --quiet https://download.sublimetext.com/latest/stable -O release.txt
-      #VERSION=$(cat release.txt)
-      VERSION=1119
+      VERSION=$SNAPCRAFT_PROJECT_VERSION
       snapcraftctl set-version $(echo $VERSION)
-      #echo $VERSION > $SNAPCRAFT_STAGE/version
       rm -f release.txt 2>/dev/null
       BUILD="x64"
       TARBALL="sublime_merge_build_${VERSION}_${BUILD}.tar.xz"
