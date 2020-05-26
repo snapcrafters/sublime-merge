@@ -1,5 +1,5 @@
 name: sublime-merge
-version: "1119"
+version: "2020"
 summary: Meet a new Git Client, from the makers of Sublime Text
 base: core18
 description: |
@@ -56,5 +56,6 @@ parts:
       - libxau6
       - libxcb1
       - libxdmcp6
+      - libglu1-mesa
     build-attributes:
       - no-patchelf
