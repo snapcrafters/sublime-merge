@@ -15,7 +15,7 @@ addons:
   snaps:
     - name: snapcraft
       channel: stable
-      classic: true
+      confinement: classic
     - name: http
     - name: transfer
     - name: lxd
