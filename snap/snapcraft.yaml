@@ -6,7 +6,8 @@ description: |
   Meet a new Git Client, from the makers of Sublime Text.
 
 architectures:
-  - build-on: [amd64, arm64]
+  - build-on: amd64
+  - build-on: arm64
 
 grade: stable
 confinement: classic
