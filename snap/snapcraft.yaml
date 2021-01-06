@@ -15,6 +15,7 @@ apps:
   sublime-merge:
     command: opt/sublime_merge/sublime_merge
     desktop: opt/sublime_merge/sublime_merge.desktop
+    aliases: [smerge]
 
 parts:
   sublime-merge:
