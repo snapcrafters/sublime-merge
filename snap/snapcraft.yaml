@@ -1,5 +1,5 @@
 name: sublime-merge
-version: "2020"
+version: "2039"
 summary: Meet a new Git Client, from the makers of Sublime Text
 base: core18
 description: |
@@ -7,6 +7,7 @@ description: |
 
 architectures:
   - build-on: amd64
+  - build-on: arm64
 
 grade: stable
 confinement: classic
@@ -25,7 +26,15 @@ parts:
       VERSION=$SNAPCRAFT_PROJECT_VERSION
       snapcraftctl set-version $(echo $VERSION)
       rm -f release.txt 2>/dev/null
-      BUILD="x64"
+      ARCHITECTURE=$(dpkg --print-architecture)
+      if [ "${ARCHITECTURE}" = "amd64" ]; then
+        BUILD="x64"
+      elif [ "${ARCHITECTURE}" = "arm64" ]; then
+        BUILD="arm64"
+      else
+        echo "ERROR! Sublime Merge tarballs are only available for amd64 and arm64. Failing the build here."
+        exit 1
+      fi
       TARBALL="sublime_merge_build_${VERSION}_${BUILD}.tar.xz"
       TARBALL_URL="https://download.sublimetext.com/${TARBALL}"
       echo "Downloading ${TARBALL_URL}..."
