@@ -1,5 +1,6 @@
 language: bash
 dist: xenial
+arch: amd64
 
 env:
   global:
@@ -12,7 +13,7 @@ addons:
   snaps:
     - name: snapcraft
       channel: stable
-      classic: true
+      confinement: classic
     - name: http
     - name: transfer
     - name: lxd
