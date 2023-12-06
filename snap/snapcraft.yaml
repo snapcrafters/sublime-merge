@@ -8,26 +8,55 @@ description: |
 architectures:
   - build-on: amd64
   - build-on: arm64
-    
+
 grade: stable
 confinement: classic
 
 apps:
   sublime-merge:
     command: opt/sublime_merge/sublime_merge
-    desktop: usr/share/applications/sublime_merge.desktop
+    desktop: opt/sublime_merge/sublime_merge.desktop
     aliases: [smerge]
 
 parts:
   sublime-merge:
-    plugin: dump
-    source: https://download.sublimetext.com/sublime-merge_build-${SNAPCRAFT_PROJECT_VERSION}_${SNAPCRAFT_TARGET_ARCH}.deb
+    plugin: nil
     override-build: |
       snapcraftctl build
+      VERSION=$SNAPCRAFT_PROJECT_VERSION
+      snapcraftctl set-version $(echo $VERSION)
+      rm -f release.txt 2>/dev/null
+      ARCHITECTURE=$(dpkg --print-architecture)
+      if [ "${ARCHITECTURE}" = "amd64" ]; then
+        BUILD="x64"
+      elif [ "${ARCHITECTURE}" = "arm64" ]; then
+        BUILD="arm64"
+      else
+        echo "ERROR! Sublime Merge tarballs are only available for amd64 and arm64. Failing the build here."
+        exit 1
+      fi
+      TARBALL="sublime_merge_build_${VERSION}_${BUILD}.tar.xz"
+      TARBALL_URL="https://download.sublimetext.com/${TARBALL}"
+      echo "Downloading ${TARBALL_URL}..."
+      wget --quiet "${TARBALL_URL}" -O "${SNAPCRAFT_PART_INSTALL}/${TARBALL}"
+
+      echo "Unpacking ${TARBALL}..."
+      mkdir -p "${SNAPCRAFT_PART_INSTALL}/opt"
+      tar xf "${SNAPCRAFT_PART_INSTALL}/${TARBALL}" -C "${SNAPCRAFT_PART_INSTALL}/opt"
+      rm "${SNAPCRAFT_PART_INSTALL}/${TARBALL}"
+
+      # Correct the extraction path so it matches assets held within.
+      #mv "${SNAPCRAFT_PART_INSTALL}/opt/sublime_merge" "${SNAPCRAFT_PART_INSTALL}/opt/sublime_merge"
+
       # Correct icon path
-      sed -i 's|Icon=sublime-merge|Icon=usr/share/icons/hicolor/256x256/apps/sublime-merge.png|' $SNAPCRAFT_PART_INSTALL/usr/share/applications/sublime_merge.desktop
+      sed -i 's|Icon=sublime-merge|Icon=/opt/sublime_merge/Icon/256x256/sublime-merge.png|' $SNAPCRAFT_PART_INSTALL/opt/sublime_merge/sublime_merge.desktop
       # Desktop Action are not Unity specific.
-      sed -i 's|OnlyShowIn|#OnlyShowIn|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/sublime_merge.desktop
+      sed -i 's|OnlyShowIn|#OnlyShowIn|g' $SNAPCRAFT_PART_INSTALL/opt/sublime_merge/sublime_merge.desktop
+    build-packages:
+      - dpkg
+      - sed
+      - tar
+      - wget
     stage-packages:
       - libbsd0
       - libffi6
