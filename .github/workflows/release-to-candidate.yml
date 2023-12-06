@@ -14,18 +14,7 @@ permissions:
   contents: read
   issues: write
 
-jobs:
-  check-version:
-    name: Check the version if it's dev or not
-    shell: bash
-    id: check-version
-    run: |
-      version=$(yq -r '.version' snap/snapcraft.yaml | cut -d '-' -f2)
-      if [[ "${version}" == "dev" ]]; then
-          isDev="true"
-      fi
-      echo "isDev=$isDev" >> "$GITHUB_OUTPUT"
-    
+jobs: 
   get-architectures:
     name: 🖥 Get snap architectures
     runs-on: ubuntu-latest
@@ -52,11 +41,9 @@ jobs:
           architecture: ${{ matrix.architecture }}
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
           store-token: ${{ secrets.SNAP_STORE_CANDIDATE }}
-          channel: ${{ steps.check-version.outputs.isDev == 'true' ? 'edge' : 'candidate' }}
   
   call-for-testing:
     name: 📣 Create call for testing
-    if: ${{ steps.check-version.outputs.isDev != 'true' }}
     needs: [release, get-architectures]
     environment: "Candidate Branch"
     runs-on: ubuntu-latest

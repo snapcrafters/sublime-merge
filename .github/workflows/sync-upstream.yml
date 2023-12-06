@@ -22,12 +22,14 @@ jobs:
         with:
           token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           update-script: |
-            version_details=$(python3 get_latest.py)
-            version=$(echo "$version_details" | cut -d ' ' -f1)
-            isDev=$(echo "$version_details" | cut -d ' ' -f2)
-            if [[ "$isDev" == "true" ]]; then
-                yq -i ".version = \"$version-dev\"" snap/snapcraft.yaml
-            else
-                yq -i ".version = \"$version\"" snap/snapcraft.yaml
-            fi
+            stable_version=$(curl -sL https://www.sublimemerge.com/download | grep -Po '<p class="latest"><i>Version:</i> Build \K[0-9]+')
+            yq -i ".version = \"$stable_version\"" snap/snapcraft.yaml
+
+            # Support for dev will be added later
+            # dev_version=$(curl -sL https://www.sublimemerge.com/dev | grep -Po '<p class="latest"><i>Version:</i> Build \K[0-9]+')
+            # if [[ "$stable_version" > "$dev_version" ]]; then
+            #     yq -i ".version = \"$stable_version\"" snap/snapcraft.yaml
+            # else
+            #     yq -i ".version = \"$dev_version-dev\"" snap/snapcraft.yaml
+            # fi
             
