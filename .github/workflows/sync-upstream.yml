@@ -31,4 +31,3 @@ jobs:
             # else
             #     yq -i ".version = \"$dev_version-dev\"" snap/snapcraft.yaml
             # fi
-            
