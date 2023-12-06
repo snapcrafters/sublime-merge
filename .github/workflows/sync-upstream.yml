@@ -1,0 +1,33 @@
+name: Update
+
+on:
+  # Runs at 10:00 UTC every day
+  schedule:
+    - cron:  '0 10 * * *'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Sync version with upstream
+    environment: "Candidate Branch"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync version with upstream
+        uses: snapcrafters/ci/sync-version@main
+        with:
+          token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          update-script: |
+            version_details=$(python3 get_latest.py)
+            version=$(echo "$version_details" | cut -d ' ' -f1)
+            isDev=$(echo "$version_details" | cut -d ' ' -f2)
+            if [[ "$isDev" == "true" ]]; then
+                yq -i ".version = \"$version-dev\"" snap/snapcraft.yaml
+            else
+                yq -i ".version = \"$version\"" snap/snapcraft.yaml
+            fi
+            
