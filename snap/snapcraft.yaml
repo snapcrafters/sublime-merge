@@ -69,3 +69,4 @@ parts:
       - libglu1-mesa
     build-attributes:
       - no-patchelf
+      
