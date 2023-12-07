@@ -15,7 +15,7 @@ confinement: classic
 apps:
   sublime-merge:
     command: opt/sublime_merge/sublime_merge
-    desktop: opt/sublime_merge/sublime_merge.desktop
+    desktop: usr/share/applications/sublime_merge.desktop
     aliases: [smerge]
 
 parts:
@@ -25,9 +25,9 @@ parts:
     override-build: |
       snapcraftctl build
       # Correct icon path
-      sed -i 's|Icon=sublime-merge|Icon=/opt/sublime_merge/Icon/256x256/sublime-merge.png|' ${SNAPCRAFT_PART_INSTALL}/opt/sublime_merge/sublime_merge.desktop
+      sed -i 's|Icon=sublime-merge|Icon=/opt/sublime_merge/Icon/256x256/sublime-merge.png|' ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/sublime_merge.desktop
       # Desktop Action are not Unity specific.
-      sed -i 's|OnlyShowIn|#OnlyShowIn|g' ${SNAPCRAFT_PART_INSTALL}/opt/sublime_merge/sublime_merge.desktop
+      sed -i 's|OnlyShowIn|#OnlyShowIn|g' ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/sublime_merge.desktop
     stage-packages:
       - libbsd0
       - libffi6
