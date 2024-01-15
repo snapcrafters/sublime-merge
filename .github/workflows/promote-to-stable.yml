@@ -23,3 +23,4 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           store-token: ${{ secrets.SNAP_STORE_STABLE }}
+          snapcraft-channel: 7.x/stable
