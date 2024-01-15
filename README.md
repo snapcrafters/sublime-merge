@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://www.sublimemerge.com/images/logo.svg" alt="Sublime Merge">
+  <img height="200px" width="200px" src=".github/icon.png" alt="Sublime Merge">
 </h1>
 
 <p align="center"><b>This is the snap for Sublime Merge</b>. It is a community-maintained package to easily install Sublime Merge on Ubuntu, Fedora, Debian and other major Linux distributions. It is available in the Snap Store, Ubuntu Software, and a number of other applications.</p>
@@ -8,7 +8,7 @@
 
 <p align="center">
 <a href="https://snapcraft.io/sublime-merge"><img src="https://snapcraft.io/sublime-merge/badge.svg" alt="Snap Status"></a>
-<a href="https://github.com/snapcrafters/sublime-merge/actions/workflows/sync-version-with-upstream.yml"><img src="https://github.com/snapcrafters/sublime-merge/actions/workflows/sync-version-with-upstream.yml/badge.svg"></a>
+<a href="https://github.com/snapcrafters/sublime-merge/actions/workflows/sync-upstream.yml"><img src="https://github.com/snapcrafters/sublime-merge/actions/workflows/sync-upstream.yml/badge.svg"></a>
 <a href="https://github.com/snapcrafters/sublime-merge/actions/workflows/release-to-candidate.yml"><img src="https://github.com/snapcrafters/sublime-merge/actions/workflows/release-to-candidate.yml/badge.svg"></a>
 <a href="https://github.com/snapcrafters/sublime-merge/actions/workflows/promote-to-stable.yml"><img src="https://github.com/snapcrafters/sublime-merge/actions/workflows/promote-to-stable.yml/badge.svg"></a>
 </p>
