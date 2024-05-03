@@ -23,6 +23,7 @@ jobs:
       - name: ⬆️ Promote to latest/stable
         uses: snapcrafters/ci/promote-to-stable@main
         with:
+          snapcraft-channel: 7.x/stable
           github-token: ${{ secrets.GITHUB_TOKEN }}
           store-token: ${{ secrets.SNAP_STORE_STABLE }}
 
@@ -40,6 +41,7 @@ jobs:
       - name: ⬆️ Promote to dev/stable
         uses: snapcrafters/ci/promote-to-stable@main
         with:
+          snapcraft-channel: 7.x/stable
           channel: dev/stable
           github-token: ${{ secrets.GITHUB_TOKEN }}
           store-token: ${{ secrets.SNAP_STORE_STABLE }}
