@@ -1,5 +1,5 @@
 name: sublime-merge
-version: "2099"
+version: "2100"
 summary: Meet a new Git Client, from the makers of Sublime Text
 base: core18
 description: |
