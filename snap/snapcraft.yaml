@@ -1,7 +1,7 @@
 name: sublime-merge
 version: "2112"
 summary: Meet a new Git Client, from the makers of Sublime Text
-base: core18
+base: core20
 description: |
   Meet a new Git Client, from the makers of Sublime Text.
 
@@ -16,7 +16,6 @@ apps:
   sublime-merge:
     command: opt/sublime_merge/sublime_merge
     desktop: usr/share/applications/sublime_merge.desktop
-    aliases: [smerge]
 
 parts:
   sublime-merge:
@@ -30,7 +29,7 @@ parts:
       sed -i 's|OnlyShowIn|#OnlyShowIn|g' ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/sublime_merge.desktop
     stage-packages:
       - libbsd0
-      - libffi6
+      - libffi7
       - libgtk-3-0
       - libpcre3
       - libx11-6
