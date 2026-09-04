@@ -1,13 +1,13 @@
 name: sublime-merge
 version: "2126"
 summary: Meet a new Git Client, from the makers of Sublime Text
-base: core20
+base: core22
 description: |
   Meet a new Git Client, from the makers of Sublime Text.
 
 architectures:
-  - build-on: amd64
-  - build-on: arm64
+  - amd64
+  - arm64
 
 grade: stable
 confinement: classic
@@ -16,6 +16,8 @@ apps:
   sublime-merge:
     command: opt/sublime_merge/sublime_merge
     desktop: usr/share/applications/sublime_merge.desktop
+    environment:
+      LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu:$SNAP/usr/lib/aarch64-linux-gnu
 
 parts:
   sublime-merge:
@@ -30,6 +32,7 @@ parts:
     stage-packages:
       - libbsd0
       - libffi7
+      - libgl1
       - libgtk-3-0
       - libpcre3
       - libx11-6
