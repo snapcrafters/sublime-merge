@@ -1,7 +1,7 @@
 name: sublime-merge
 version: "2125"
 summary: Meet a new Git Client, from the makers of Sublime Text
-base: core20
+base: core22
 description: |
   Meet a new Git Client, from the makers of Sublime Text.
 
