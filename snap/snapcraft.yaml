@@ -38,5 +38,5 @@ parts:
       - libxdmcp6
       - libglu1-mesa
     build-attributes:
-      - no-patchelf
+      - enable-patchelf
       
