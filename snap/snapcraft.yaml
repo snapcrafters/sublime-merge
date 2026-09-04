@@ -36,6 +36,7 @@ parts:
       - libxau6
       - libxcb1
       - libxdmcp6
+      - libgl1
       - libglu1-mesa
     build-attributes:
       - enable-patchelf
