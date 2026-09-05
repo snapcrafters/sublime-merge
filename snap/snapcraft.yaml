@@ -16,6 +16,8 @@ apps:
   sublime-merge:
     command: opt/sublime_merge/sublime_merge
     desktop: usr/share/applications/sublime_merge.desktop
+    environment:
+      LD_LIBRARY_PATH: $SNAP/lib/x86_64-linux-gnu:$SNAP/usr/lib/x86_64-linux-gnu:$SNAP/lib/aarch64-linux-gnu:$SNAP/usr/lib/aarch64-linux-gnu:/snap/core22/current/lib/x86_64-linux-gnu:/snap/core22/current/usr/lib/x86_64-linux-gnu:/snap/core22/current/lib/aarch64-linux-gnu:/snap/core22/current/usr/lib/aarch64-linux-gnu
 
 parts:
   sublime-merge:
