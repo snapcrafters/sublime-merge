@@ -15,5 +15,3 @@ jobs:
     steps:
       - name: 🧪 Build snap on amd64
         uses: snapcrafters/ci/test-snap-build@main
-        with:
-          snapcraft-channel: 7.x/stable
