@@ -42,7 +42,6 @@ jobs:
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
           repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           store-token: ${{ secrets.SNAP_STORE_CANDIDATE }}
-          snapcraft-channel: 7.x/stable
           channel: dev/candidate
 
   call-for-testing:
@@ -60,7 +59,6 @@ jobs:
           architectures: ${{ needs.get-architectures.outputs.architectures }}
           channel: dev/candidate
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          snapcraft-channel: 7.x/stable
           promotion-channel: dev/stable
 
   screenshots:
