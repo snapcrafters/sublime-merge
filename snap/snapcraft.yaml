@@ -1,6 +1,6 @@
 name: sublime-merge
 title: Sublime Merge
-version: "2130"
+version: "2132"
 summary: Meet a new Git Client, from the makers of Sublime Text
 base: core24
 description: |
