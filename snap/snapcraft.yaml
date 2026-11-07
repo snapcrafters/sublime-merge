@@ -42,6 +42,10 @@ lint:
 apps:
   sublime-merge:
     command: opt/sublime_merge/sublime_merge
+    command-chain: [bin/im-modules]
+    environment:
+      GTK_PATH: $SNAP/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/gtk-3.0
+      GTK_IM_MODULE_FILE: $SNAP_USER_DATA/gtk-immodules-$SNAP_REVISION.cache
     desktop: usr/share/applications/sublime_merge.desktop
 
 parts:
@@ -50,11 +54,14 @@ parts:
     plugin: dump
     override-build: |
       craftctl default
+      install -Dm755 "$CRAFT_PROJECT_DIR/snap/local/im-modules" "$CRAFT_PART_INSTALL/bin/im-modules"
       # Correct icon path
       sed -i 's|Icon=sublime-merge|Icon=/opt/sublime_merge/Icon/256x256/sublime-merge.png|' ${CRAFT_PART_INSTALL}/usr/share/applications/sublime_merge.desktop
       # Desktop Action are not Unity specific.
       sed -i 's|OnlyShowIn|#OnlyShowIn|g' ${CRAFT_PART_INSTALL}/usr/share/applications/sublime_merge.desktop
     stage-packages:
+      - fcitx5-frontend-gtk3
+      - ibus-gtk3
       - libcurl4t64
       - libegl1
       - libgl1
