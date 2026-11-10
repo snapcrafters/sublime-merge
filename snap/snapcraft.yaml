@@ -54,11 +54,24 @@ parts:
     plugin: dump
     override-build: |
       craftctl default
+
+      # Disable upstream update checks by default; user preferences still override this.
+      archive="$CRAFT_PART_INSTALL/opt/sublime_merge/Packages/Default - Merge.sublime-package"
+      settings_dir="$(mktemp -d)"
+      unzip -p "$archive" Preferences.sublime-settings > "$settings_dir/original.json"
+      jq '.update_check = false' "$settings_dir/original.json" > "$settings_dir/Preferences.sublime-settings"
+      (cd "$settings_dir" && zip -q "$archive" Preferences.sublime-settings)
+      rm -r "$settings_dir"
+
       install -Dm755 "$CRAFT_PROJECT_DIR/snap/local/im-modules" "$CRAFT_PART_INSTALL/bin/im-modules"
       # Correct icon path
       sed -i 's|Icon=sublime-merge|Icon=/opt/sublime_merge/Icon/256x256/sublime-merge.png|' ${CRAFT_PART_INSTALL}/usr/share/applications/sublime_merge.desktop
       # Desktop Action are not Unity specific.
       sed -i 's|OnlyShowIn|#OnlyShowIn|g' ${CRAFT_PART_INSTALL}/usr/share/applications/sublime_merge.desktop
+    build-packages:
+      - jq
+      - unzip
+      - zip
     stage-packages:
       - fcitx5-frontend-gtk3
       - ibus-gtk3
